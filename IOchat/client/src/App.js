@@ -13,15 +13,18 @@ function App() {
   const [msg, setMsg] = useState('');
   const messageEndRef = useRef(null);
 
-  useEffect(() => {
+  const [privateTarget, setPrivateTarget] = useState('');
+
+  useEffect(function sMessage() {
     if (!webSocket) return;
     function sMessageCallback(msg) {
-      const { data, id } = msg;
+      const { data, id, target } = msg;
       setMsgList((prev) => [
         ...prev,
         {
           msg: data,
-          type: 'other',
+
+          type: target ? 'private' : 'other',
           id,
         },
       ]);
@@ -32,7 +35,7 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
+  useEffect(function sLogin() {
     if (!webSocket) return;
     function sLoginCallback(msg) {
       setMsgList((prev) => [
@@ -50,7 +53,7 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
+  useEffect(function scrollToBottom() {
     const scrollToBottom = () => {};
     scrollToBottom();
   }, []);
@@ -68,6 +71,7 @@ function App() {
     const sendData = {
       data: msg,
       id: userId,
+      target: privateTarget,
     };
     webSocket.emit('message', sendData);
     setMsgList((prev) => [...prev, { msg, type: 'me', id: userId }]);
@@ -77,6 +81,10 @@ function App() {
     setMsg(e.target.value);
   };
 
+  const onSetPrivateTarget = (e) => {
+    const { id } = e.target.dataset;
+    setPrivateTarget((prev) => (prev === id ? '' : id));
+  };
   return (
     <div className="app-container">
       <div className="wrap">
@@ -95,15 +103,34 @@ function App() {
                   );
                 }
                 return (
-                  <li className={item.type} key={`${i}_li`}>
-                    <div className="userId">{item.id}</div>
-                    <div className={item.type}>{item.msg}</div>
+                  <li
+                    className={item.type}
+                    key={`${i}_li`}
+                    name={item.id}
+                    data-id={item.id}
+                    onClick={onSetPrivateTarget}
+                  >
+                    <div
+                      className={
+                        item.id === privateTarget ? 'private-user' : 'userId'
+                      }
+                      data-id={item.id}
+                      name={item.id}
+                    >
+                      {item.id}
+                    </div>
+                    <div className={item.type} data-id={item.id} name={item.id}>
+                      {item.msg}
+                    </div>
                   </li>
                 );
               })}
               <li ref={messageEndRef} />
             </ul>
             <form className="send-form" onSubmit={onSendSubmitHandler}>
+              {privateTarget && (
+                <div className="private-target">{privateTarget}</div>
+              )}
               <input
                 placeholder="Enter your message"
                 onChange={onChangeMsgHandler}

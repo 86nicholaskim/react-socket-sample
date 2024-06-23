@@ -6,11 +6,19 @@ const io = new Server('5000', {
   },
 });
 
+const clients = new Map();
+
 io.sockets.on('connection', (socket) => {
-  socket.on('message', (data) => {
-    socket.broadcast.emit('sMessage', data);
+  console.log('user connected');
+  socket.on('message', (res) => {
+    const { target } = res;
+    const toUser = clients.get(target);
+    target
+      ? io.sockets.to(toUser).emit('sMessage', res)
+      : socket.broadcast.emit('sMessage', res);
   });
   socket.on('login', (data) => {
+    clients.set(data, socket.id);
     socket.broadcast.emit('sLogin', data);
   });
   socket.on('disconnect', () => {
