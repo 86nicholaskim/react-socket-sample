@@ -12,13 +12,20 @@
       "program": "${workspaceFolder}/html5-websocket/server/server.js"
     },
     {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch IOChat Node Server",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}/IOchat/server/server.js"
+    },
+    {
       "type": "chrome",
       "request": "launch",
       "name": "Launch React App",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}/client/src",
-      // "breakOnLoad": true,
-      // "sourceMaps": true,
+      "webRoot": "${workspaceFolder}/IOchat/client/src",
+      "breakOnLoad": true,
+      "sourceMaps": true,
       "skipFiles": ["<node_internals>/**"]
     }
   ],
@@ -26,6 +33,10 @@
     {
       "name": "Debug Both",
       "configurations": ["Launch Node Server", "Launch React App"]
+    },
+    {
+      "name": "Debug IOchat Both",
+      "configurations": ["Launch IOChat Node Server", "Launch React App"]
     }
   ]
 }

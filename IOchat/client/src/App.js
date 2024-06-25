@@ -14,6 +14,7 @@ function App() {
   const messageEndRef = useRef(null);
 
   const [privateTarget, setPrivateTarget] = useState('');
+  const [roomNumber, setRoomNumber] = useState('1');
 
   useEffect(function sMessage() {
     if (!webSocket) return;
@@ -53,14 +54,19 @@ function App() {
     };
   }, []);
 
-  useEffect(function scrollToBottom() {
-    const scrollToBottom = () => {};
-    scrollToBottom();
-  }, []);
+  useEffect(
+    function scrollToBottom() {
+      const scrollToBottom = () => {
+        messageEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+      };
+      scrollToBottom();
+    },
+    [msgList]
+  );
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
-    webSocket.emit('login', userId);
+    webSocket.emit('login', { userId, roomNumber });
     setIsLogin(true);
   };
   const onChangeUserIdHandler = (e) => {
@@ -85,12 +91,18 @@ function App() {
     const { id } = e.target.dataset;
     setPrivateTarget((prev) => (prev === id ? '' : id));
   };
+
+  const onRoomChangeHandler = (e) => {
+    setRoomNumber(e.target.value);
+  };
   return (
     <div className="app-container">
       <div className="wrap">
         {isLogin && (
           <div className="chat-box">
-            <h3>Login as a "{userId}"</h3>
+            <h3>
+              Login as a "{userId}" in Room {roomNumber}
+            </h3>
             <ul className="chat">
               {msgList.map((item, i) => {
                 if (item.type === 'welcome') {
@@ -147,6 +159,10 @@ function App() {
               <div>IOChat</div>
             </div>
             <form className="login-form" onSubmit={onSubmitHandler}>
+              <select onChange={onRoomChangeHandler}>
+                <option value="1">Room 1</option>
+                <option value="2">Room 2 </option>
+              </select>
               <input
                 placeholder="Enter your ID"
                 onChange={onChangeUserIdHandler}

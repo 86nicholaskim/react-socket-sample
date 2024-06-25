@@ -31,6 +31,11 @@
   border-radius: 5px;
   background-color: #f6f6f6;
 }
+.app-container > .wrap > .login-box > .login-form select {
+  border: 0;
+  cursor: pointer;
+}
+
 .app-container > .wrap > .login-box > .login-form > button {
   border: 0;
   padding: 10px;
