@@ -1,9 +1,10 @@
 // 필요한 모듈 로드
-const privateMsg = require('/privateMsg');
+const privateMsg = require('./privateMsg');
 const groupMsg = require('./groupMsg');
 const common = require('./common');
 const mongoose = require('mongoose');
-require('dotenv').config(); // dotenv 패키지를 사용하여 .env 파일 로드
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '.env') }); // dotenv 패키지를 사용하여 .env 파일 로드
 
 // 환경 변수에서 MongoDB 연결 URI 가져오기
 const uri = process.env.MONGODB_URI;

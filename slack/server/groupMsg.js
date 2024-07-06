@@ -1,6 +1,6 @@
 const { GroupUserList, GroupRoom, GroupMsg } = require('./schema/Group');
 
-const GroupMsg = (io) => {
+const groupMsg = (io) => {
   io.of('/group').use(async (socket, next) => {
     const userId = socket.handshake.auth.userId;
     if (!userId) {
@@ -110,4 +110,4 @@ async function createMsgDocument(roomNumber, res) {
   });
 }
 
-module.exports.groupMsginit = GroupMsg;
+module.exports.groupMsginit = groupMsg;

@@ -7,9 +7,9 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Node Server",
+      "name": "Launch Slack Node Server",
       "skipFiles": ["<node_internals>/**"],
-      "program": "${workspaceFolder}/html5-websocket/server/server.js"
+      "program": "${workspaceFolder}/slack/server/server.js"
     },
     {
       "type": "node",
@@ -21,9 +21,9 @@
     {
       "type": "chrome",
       "request": "launch",
-      "name": "Launch React App",
+      "name": "Launch Slack React App",
       "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}/IOchat/client/src",
+      "webRoot": "${workspaceFolder}/slack/client/src",
       "breakOnLoad": true,
       "sourceMaps": true,
       "skipFiles": ["<node_internals>/**"]
@@ -32,11 +32,11 @@
   "compounds": [
     {
       "name": "Debug Both",
-      "configurations": ["Launch Node Server", "Launch React App"]
-    },
-    {
-      "name": "Debug IOchat Both",
-      "configurations": ["Launch IOChat Node Server", "Launch React App"]
+      "configurations": ["Launch Slack Node Server", "Launch Slack React App"]
     }
+    // {
+    //   "name": "Debug IOchat Both",
+    //   "configurations": ["Launch IOChat Node Server", "Launch React App"]
+    // }
   ]
 }

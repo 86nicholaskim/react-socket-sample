@@ -9,52 +9,51 @@ const privateMsg = (io) => {
     }
   });
 
-  io.of('/private')
-    .on('connection', (socket) => {
-      socket.on('msgInit', async (res) => {
-        const { targetId } = res;
-        const userId = targetId[0];
-        const privateRoom = await getRoomNumber(userId, socket.userId);
-        if (!privateRoom) return;
-        const msgList = await PrivateMsg.find({ roomNumber: privateRoom._id });
+  io.of('/private').on('connection', (socket) => {
+    socket.on('msgInit', async (res) => {
+      const { targetId } = res;
+      const userId = targetId[0];
+      const privateRoom = await getRoomNumber(userId, socket.userId);
+      if (!privateRoom) return;
+      const msgList = await PrivateMsg.find({
+        roomNumber: privateRoom._id,
+      }).exec();
+      io.of('/private')
+        .to(privateRoom._id)
+        .emit('private-msg-init', { msg: msgList });
+    });
+
+    socket.on('privateMsg', async (res) => {
+      const { msg, toUserId, time } = res;
+      const privateRoom = await getRoomNumber(toUserId, socket.userId);
+      if (!privateRoom) return;
+      socket.broadcast.in(privateRoom.id).emit('private-msg', {
+        msg,
+        toUserId,
+        fromUserId: socket.userId,
+        time,
       });
-    })
-    .exec();
-
-  io.of('/private')
-    .to(privateRoom._id)
-    .emit('private-msg-init', { msg: msgList });
-
-  socket.on('privateMsg', async (res) => {
-    const { msg, toUserId, time } = res;
-    const privateRoom = await getRoomNumber(toUserId, socket.userId);
-    if (!privateRoom) return;
-    socket.broadcast.in(privateRoom.id).emit('private-msg', {
-      msg,
-      toUserId,
-      fromUserId: socket.userId,
-      time,
+      await createMsgDocument(privateRoom._id, res);
     });
-    await createMsgDocument(privateRoom._id, res);
-  });
 
-  socket.on('reqJoinRoom', async (res) => {
-    const { targetId, targetSocketId } = res;
-    let privateRoom = await getRoomNumber(targetId, socket.userId);
-    if (!privateRoom) {
-      privateRoom = `${targetId}-${socket.userId}`;
-      await findOrCreateRoomDocument(privateRoom);
-    } else {
-      privateRoom = privateRoom._id;
-    }
-    socket.join(privateRoom);
-    io.of('/private').to(targetSocketId).emit('msg-alert', {
-      roomNumber: privateRoom,
+    socket.on('reqJoinRoom', async (res) => {
+      const { targetId, targetSocketId } = res;
+      let privateRoom = await getRoomNumber(targetId, socket.userId);
+      if (!privateRoom) {
+        privateRoom = `${targetId}-${socket.userId}`;
+        await findOrCreateRoomDocument(privateRoom);
+      } else {
+        privateRoom = privateRoom._id;
+      }
+      socket.join(privateRoom);
+      io.of('/private').to(targetSocketId).emit('msg-alert', {
+        roomNumber: privateRoom,
+      });
     });
-  });
 
-  socket.on('resJoinRoom', (res) => {
-    socket.join(res);
+    socket.on('resJoinRoom', (res) => {
+      socket.join(res);
+    });
   });
 };
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { css } from '@emotion/react';
 import {
-  IndexContainerCss,
+  indexContainerCss,
   loginWrapCss,
   inputCss,
   headerCss,
@@ -40,7 +40,7 @@ const IndexContainer = () => {
   };
 
   return (
-    <div css={IndexContainerCss}>
+    <div css={indexContainerCss}>
       <div css={loginWrapCss}>
         <h1 css={headerCss}>
           <img src={logo} width="100px" hegith="auto" alt="logo" />
@@ -54,7 +54,7 @@ const IndexContainer = () => {
             onChange={onUserNameHandler}
           />
           <button onClick={onLoginHandler} css={btnCss}>
-            Sign inß
+            Sign in
           </button>
         </form>
       </div>

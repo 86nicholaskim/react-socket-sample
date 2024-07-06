@@ -1,7 +1,7 @@
 import { containerCss, sendCss } from './TextEditor.style';
-import ReactQuill, { Quill } from './react-quill';
-import 'react-quill/dis/quill/snow.css';
-import { HiPaperAirPlane } from 'react-icons/hi2';
+import ReactQuill, { Quill } from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+import { HiPaperAirplane } from 'react-icons/hi2';
 
 const modules = {
   toolbar: {},
@@ -15,7 +15,7 @@ const TextEditor = ({
 }) => {
   return (
     <div css={containerCss}>
-      <HiPaperAirPlane css={sendCss} onClick={onSendhandler} />
+      <HiPaperAirplane css={sendCss} onClick={onSendhandler} />
       <ReactQuill
         theme="snow"
         modules={modules}

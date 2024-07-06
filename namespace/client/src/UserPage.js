@@ -34,7 +34,7 @@ const UserPage = () => {
         {!isConnect && <em className="deactive">Not Connected!</em>}
       </h1>
       <div className="btn-box">
-        <button onClick={onConnectHandler} className="active-btnß">
+        <button onClick={onConnectHandler} className="active-btn">
           Connected
         </button>
         <button onClick={onDisConnectHandler} className="deactive-btn">
