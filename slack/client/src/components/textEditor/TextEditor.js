@@ -4,7 +4,13 @@ import 'react-quill/dist/quill.snow.css';
 import { HiPaperAirplane } from 'react-icons/hi2';
 
 const modules = {
-  toolbar: {},
+  toolbar: {
+    container: [
+      [{ list: 'ordered' }, { list: 'bullet' }],
+      ['bold', 'italic', 'underline', 'strike'],
+      [{ script: 'sub' }, { script: 'super' }],
+    ],
+  },
 };
 
 const TextEditor = ({

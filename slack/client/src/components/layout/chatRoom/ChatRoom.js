@@ -15,7 +15,7 @@ import { useContext, useEffect, useRef, useState } from 'react';
 
 const ChatRoom = () => {
   const {
-    state: { currentChat, loginInfo, gropuChat, userList },
+    state: { currentChat, loginInfo, groupChat, userList },
   } = useContext(Context);
   const reactQuillRef = useRef(null);
   const [text, setText] = useState('');
@@ -177,7 +177,7 @@ const ChatRoom = () => {
   return (
     <article css={chatRoomWrapCss}>
       <div css={subTitleCss}>
-        {gropuChat.textBarStatus && (
+        {groupChat.textBarStatus && (
           <GroupTextInput
             groupText={groupUser}
             onChangeGroupTextHandler={onChangeGroupTextHandler}
@@ -187,7 +187,7 @@ const ChatRoom = () => {
             onJoinClick={onJoinClick}
           />
         )}
-        {!gropuChat.textBarStatus &&
+        {!groupChat.textBarStatus &&
           currentChat.targetId.map((v) => {
             <span className="user">{v}</span>;
           })}

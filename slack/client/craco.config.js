@@ -1,5 +1,5 @@
 module.exports = {
   babel: {
-    preset: ['@emotion/babel-preset-css-prop'],
+    presets: ['@emotion/babel-preset-css-prop'],
   },
 };

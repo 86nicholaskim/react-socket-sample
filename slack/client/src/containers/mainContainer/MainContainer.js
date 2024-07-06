@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { css } from '@emotion/react'; // ??
+// import { css } from '@emotion/react'; // ??
 import {
   mainContainerCss,
   slackMainCss,
@@ -66,8 +66,8 @@ const MainContainer = () => {
         <header css={slackHeaderCss}>
           <ul css={slackWindowCss}>
             <li className="red"></li>
-            <li className="red"></li>
-            <li className="red"></li>
+            <li className="orange"></li>
+            <li className="green"></li>
           </ul>
           <div className="user">{loginInfo.userId}</div>
         </header>
