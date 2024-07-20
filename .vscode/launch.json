@@ -19,13 +19,14 @@
       "program": "${workspaceFolder}/IOchat/server/server.js"
     },
     {
-      "type": "chrome",
+      "type": "pwa-chrome",
       "request": "launch",
       "name": "Launch Slack React App",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}/slack/client/src",
       "breakOnLoad": true,
       "sourceMaps": true,
+      "trace": true,
       "skipFiles": ["<node_internals>/**"]
     }
   ],

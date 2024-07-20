@@ -12,7 +12,7 @@ const groupMsg = (io) => {
     next();
   });
 
-  io.of('/group').use('connection', async (socket) => {
+  io.of('/group').on('connection', async (socket) => {
     const groupRoom = await GroupRoom.find({
       loginUserId: socket.userId,
     }).exec();
