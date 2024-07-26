@@ -108,7 +108,7 @@ const ChatRoom = () => {
   }, []);
 
   const onPrivateMsgSendHandler = () => {
-    const msg = reactQuillRef.current.unprivileageEditor.getText();
+    const msg = reactQuillRef.current.unprivilegedEditor.getText();
     const currentTime = dayjs().format('HH:mm a');
     setMsgList((prev) => [
       ...prev,

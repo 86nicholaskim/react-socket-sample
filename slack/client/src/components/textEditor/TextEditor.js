@@ -17,11 +17,11 @@ const TextEditor = ({
   text,
   onChangeTexthandler,
   reactQuillRef,
-  onSendhandler,
+  onSendHandler,
 }) => {
   return (
     <div css={containerCss}>
-      <HiPaperAirplane css={sendCss} onClick={onSendhandler} />
+      <HiPaperAirplane css={sendCss} onClick={onSendHandler} />
       <ReactQuill
         theme="snow"
         modules={modules}
